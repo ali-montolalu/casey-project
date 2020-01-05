@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="icon/hexagonos.jpg">
+    <title>Ujian Test</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container ">
+   
+        <div class="container">
+  
+ <table class="table table-bordered mt-5">
+  <thead class="bg-primary text-white">
+  <tr>
+                <th>Pertanyaan</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>Jawaban</th>
+            </tr>
+</thead>
+<tbody>
+<?php
+                while($row=mysqli_fetch_assoc($sql))
+                    {
+            ?>
+  <tr>
+                <td>Peserta didik dapat menggunakan tanda baca yang tepat. Kalimat berikut yang menggunakan tanda koma dengan benar adalah…</td>
+                <td>Toko kue, dan toko sayur letaknya bersebelahan.</td>
+                <td>Aisyah, Fatimah, dan Khadijah belajar bersama.</td>
+                <td>Ibu pergi ke pasar untuk berbelanja buah duku, salak dan manggis.</td>
+                <td>Adik menabung sebesar Rp. 150,000</td>
+                <td>b</td>
+            </tr>
+  <?php
+                    }
+            ?>
+</tbody>
+</table>
+<a href="halaman_admin.html" class="btn btn-dark ">Back</a>
+</div>
+
+</div>
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="assets/jquery-3.4.1.slim.min.js" ></script>
+    <script src="assets/popper.min.js" ></script>
+    <script src="assets/js/bootstrap.min.js" ></script>
+</body>
+</html>
