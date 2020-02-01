@@ -1,4 +1,16 @@
+<?php 
+  session_start();
 
+  require 'funcition.php';
+
+  // cek apakah yang mengakses halaman ini sudah login
+  if($_SESSION['level']==""){
+    header("location:index.php?pesan=gagal");
+  }
+  
+  $mahasiswa = query("SELECT * FROM user");
+
+  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +31,20 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="halaman_admin.html">Soal </a>
+        <a class="nav-link" href="halaman_admin.php">Soal </a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="#">User</a>
       </li>
     </ul>
     <form class="form-inline">
-    <a href="index.html" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="logout.php" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </form>
   </div>
 </nav>
 
 <div class="container">
-	<a href="rsiswa.html" class="btn btn-primary mt-5 " ><i class="fas fa-plus"></i> Tambah User</a>
+	<a href="rsiswa.php" class="btn btn-primary mt-5 " ><i class="fas fa-plus"></i> Tambah User</a>
 <div class="card mt-2 mb-2">
 	
  <table class="table table-striped ">
@@ -48,21 +60,14 @@
 <?php $i = 1; ?>
 <?php foreach ($mahasiswa as $row) :?>
 	<tr>
-		<td>1</td>
-		<td>admin</td>
-    <td>admin</td>
+		<td><?=$i; ?></td>
+		<td><?=$row["username"]; ?></td>
+    <td><?=$row["level"]; ?></td>
 		<td>
-			<button class="btn btn-danger" ><i class="fas fa-trash-alt"></i></button>
+			
+			<a href="hapuss.php?id=<?=$row["id"]; ?>" class="btn btn-danger" onclick="return confirm('yakin');"><i class="fas fa-trash-alt"></i></a>
 		</td>
 	</tr>
-  <tr>
-    <td>2</td>
-    <td>siswa</td>
-    <td>siswa</td>
-    <td>
-      <button class="btn btn-danger" ><i class="fas fa-trash-alt"></i></button>
-    </td>
-  </tr>
 	<?php $i++; ?>
 <?php endforeach; ?>
 </tbody>

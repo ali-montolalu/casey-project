@@ -1,4 +1,11 @@
+<?php 
+	session_start();
 
+	// cek apakah yang mengakses halaman ini sudah login
+	if($_SESSION['level']==""){
+    header("location:index.php?pesan=gagal");
+  }
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +24,7 @@
 <br>
    <div class="container">
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-      Halo <strong>SISWA</strong> Anda telah login
+      Halo <strong><?php echo strtoupper($_SESSION['username']); ?></strong> Anda telah login
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -37,31 +44,31 @@
                 $no = 0;
                 while($data = mysqli_fetch_array($query)){?>
                      <table  >
-                    <form action="kunci.html" method="post">
+                    <form action="kunci.php" method="post">
                         <input type="hidden" name="id[]" value="<?php echo $data['id']; ?>">
                         <input type="hidden" name="jumlah" value="<?php echo $jumlah; ?>">
 
 <hr>
                         <tr>
-                            <td width="50px">1</td>
-                            <td>Peserta didik dapat menggunakan tanda baca yang tepat. Kalimat berikut yang menggunakan tanda koma dengan benar adalah…</td>
+                            <td width="50px"><?php echo $no = $no+1; ?></td>
+                            <td><?php echo $data['soal'];?></td>
                         </tr>
 
                         <tr>
                             <td></td>
-                            <td>A. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="A">Toko kue, dan toko sayur letaknya bersebelahan.</td>
+                            <td>A. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="A"><?php echo $data['a'];?></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td>B. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="B">Aisyah, Fatimah, dan Khadijah belajar bersama.</td>
+                            <td>B. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="B"><?php echo $data['b'];?></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td>C. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="C">Ibu pergi ke pasar untuk berbelanja buah duku, salak dan manggis.</td>
+                            <td>C. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="C"><?php echo $data['c'];?></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td>D. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="D">Adik menabung sebesar Rp. 150,000</td>
+                            <td>D. <input name="pilihan[<?php echo $data['id']?>]" type="radio" value="D"><?php echo $data['d'];?></td>
                         </tr>
 
                         
@@ -73,8 +80,7 @@
                     <td></td>
 
                     <td ><hr>
-
-                        <a href="kunci.html" class="btn btn-primary">Confirm</a>
+                        <input class="btn btn-primary" type="submit" name="submit" value="Kirim" onclick="return confirm('Apakah Anda yakin dengan jawaban Anda?')">
                     </td>
                 </tr>
 

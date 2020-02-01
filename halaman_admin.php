@@ -1,4 +1,16 @@
+<?php 
+	session_start();
 
+	require 'funcition.php';
+
+	// cek apakah yang mengakses halaman ini sudah login
+	if($_SESSION['level']==""){
+		header("location:index.php?pesan=gagal");
+	}
+	
+	$mahasiswa = query("SELECT * FROM soal");
+
+	?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,11 +33,11 @@
         <a class="nav-link" href="#">Soal </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="data_siswa.html">User</a>
+        <a class="nav-link" href="data_siswa.php">User</a>
       </li>
     </ul>
     <form class="form-inline">
-    <a href="index.html" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="logout.php" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </form>
   </div>
 </nav>
@@ -34,12 +46,12 @@
 
 <div class="container">
 	<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-	  Halo <strong>...</strong> Anda telah login
+	  Halo <strong><?php echo strtoupper($_SESSION['username']); ?></strong> Anda telah login
 	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	  </button>
 	</div>
-		<a href="tambah.html" class="btn btn-primary mt-5 " ><i class="fas fa-plus"></i> Tambah Soal</a>
+		<a href="tambah.php" class="btn btn-primary mt-5 " ><i class="fas fa-plus"></i> Tambah Soal</a>
 
 <div class="card mt-2 mb-2">
 	
@@ -56,12 +68,12 @@
 <?php $i = 1; ?>
 <?php foreach ($mahasiswa as $row) :?>
 	<tr>
-		<td>1</td>
-		<td>Peserta didik dapat menggunakan tanda baca yang tepat. Kalimat berikut yang menggunakan tanda koma dengan benar adalah…</td>
-		<td><a href="view.html" class="btn btn-primary" ><i class="fas fa-eye"></i></td>
+		<td><?=$i; ?></td>
+		<td><?=$row["soal"]; ?></td>
+		<td><a href="view.php?id=<?=$row["id"]; ?>" class="btn btn-primary" ><i class="fas fa-eye"></i></td>
 		<td>
-			<a href="ubah.html" class="btn btn-success"><i class="fas fa-edit"></i> Edit</a>
-			<button class="btn btn-danger" ><i class="fas fa-trash-alt"></i> Hapus</button> 
+			<a href="ubah.php?id=<?=$row["id"]; ?>" class="btn btn-success"><i class="fas fa-edit"></i> Edit</a>
+			<a href="hapus.php?id=<?=$row["id"]; ?>" class="btn btn-danger" onclick="return confirm('yakin');"><i class="fas fa-trash-alt"></i> Hapus</a>
 		</td>
 	</tr>
 	<?php $i++; ?>

@@ -1,4 +1,10 @@
-
+	<?php 
+	if(isset($_GET['pesan'])){
+		if($_GET['pesan']=="gagal"){
+			echo "<div class='alert'>Username dan Password tidak sesuai !</div>";
+		}
+	}
+	?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +22,9 @@
   </head>
   <body id='header' class='header ignielPelangi'>
  
-
+ <?php if(isset($error)): ?>
+	<p style="color: red; font-style: italic;">üsername / password salah</p>
+<?php endif; ?>
 <div class="posisi" id="posisi">
 <div class="container">
 	<div class="row justify-content-center">
@@ -45,9 +53,9 @@
 						    </div>
 						</div>
 						<div class="card-footer bg-transparent " id="footer">
-			  				<div class="row justify-content-center">
-				  				<a href="halaman_admin.html" class="btn btn-primary text-white col col-5">admin</a>&nbsp;
-				  				<a href="halaman_siswa.html" class="btn btn-primary text-white col col-5">siswa</a>
+							<div class="row justify-content-center">
+						 	
+			  				<button type="submit" name="login" class="btn btn-primary text-white col col-12">Login</button>
 			  				</div>
 			  			</div>
 			  		</div>

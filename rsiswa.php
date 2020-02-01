@@ -1,4 +1,23 @@
+<?php 
+session_start();
 
+// cek apakah yang mengakses halaman ini sudah login
+	if($_SESSION['level']==""){
+		header("location:index.php?pesan=gagal");
+	}
+require 'funcition.php';
+
+if(isset($_POST["register"])){
+	if(registrasi1($_POST) > 0){
+		echo "<script>
+				alert('user baru berhasil ditambahkan');
+			  </script>";
+	} else {
+		echo mysqli_error($conn);
+	}
+}
+
+ ?>
 
 <!doctype html>
 <html lang="en">
@@ -14,6 +33,9 @@
   </head>
   <body class="bg-gradient-primary">
 
+<?php if(isset($error)): ?>
+	<p style="color: red; font-style: italic;">üsername / password salah</p>
+<?php endif; ?>
 
 <div class="container">
 	<div class="row justify-content-center">
@@ -29,10 +51,6 @@
 					    <label for="password">Password</label>
 					    <input type="password" class="form-control" name="password" id="password"></input>
 					 </div>
-					 <div class="form-group ">
-					    <label for="password2">Password</label>
-					    <input type="password" class="form-control" name="password2" id="password2"></input>
-					 </div>
 					 <div class="form-group">
 					    <label for="level">Level</label>
 					    <select class="form-control" id="level" name="level">
@@ -42,8 +60,8 @@
 					  </div>
 					  </div>
 					  <div class="card-footer">
-					 	<a href="data_siswa.html" class="btn btn-dark ">Back</a>
-					 	<a href="data_siswa.html" class="btn btn-primary ">Confirm</a> 
+					 	<a href="data_siswa.php" class="btn btn-dark ">Back</a> 
+		  				<button type="submit" name="register" class="btn btn-primary ">Confirm</button>
 		  				</div>
 		  		
 			</form>

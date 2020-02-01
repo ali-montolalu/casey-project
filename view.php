@@ -1,4 +1,17 @@
+<?php 
+session_start();
 
+// cek apakah yang mengakses halaman ini sudah login
+    if($_SESSION['level']==""){
+    header("location:index.php?pesan=gagal");
+  }
+
+require 'funcition.php';
+
+$id = $_GET["id"];
+        $sql    =mysqli_query($conn,"SELECT * FROM soal WHERE id='$id'");
+
+?>
 
 <!DOCTYPE html>
 <html>
@@ -29,19 +42,19 @@
                     {
             ?>
   <tr>
-                <td>Peserta didik dapat menggunakan tanda baca yang tepat. Kalimat berikut yang menggunakan tanda koma dengan benar adalah…</td>
-                <td>Toko kue, dan toko sayur letaknya bersebelahan.</td>
-                <td>Aisyah, Fatimah, dan Khadijah belajar bersama.</td>
-                <td>Ibu pergi ke pasar untuk berbelanja buah duku, salak dan manggis.</td>
-                <td>Adik menabung sebesar Rp. 150,000</td>
-                <td>b</td>
+                <td><?php echo $row['soal'];?></td>
+                <td><?php echo $row['a'];?></td>
+                <td><?php echo $row['b'];?></td>
+                <td><?php echo $row['c'];?></td>
+                <td><?php echo $row['d'];?></td>
+                <td><?php echo $row['kunci'];?></td>
             </tr>
   <?php
                     }
             ?>
 </tbody>
 </table>
-<a href="halaman_admin.html" class="btn btn-dark ">Back</a>
+<a href="halaman_admin.php" class="btn btn-dark ">Back</a>
 </div>
 
 </div>

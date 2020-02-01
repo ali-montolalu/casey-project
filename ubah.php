@@ -1,4 +1,39 @@
+<?php 
+session_start();
 
+// cek apakah yang mengakses halaman ini sudah login
+	if($_SESSION['level']==""){
+    header("location:index.php?pesan=gagal");
+  }
+
+require 'funcition.php';
+
+//ambil data di url
+$id = $_GET["id"];
+//query data mahasiswa berdasarkan id
+$mhs = query("SELECT * FROM soal WHERE id=$id")[0];
+
+//cek tombol submit sudah ditekan atau belum 
+if(isset($_POST["submit"])){
+
+	//cek apakah data berhasil di ubah atau tidak
+	if (ubah($_POST) > 0) {
+		echo "
+		<script>
+			alert('data berhasil diubah!');
+			document.location.href = 'halaman_admin.php';
+		</script> 
+		";
+	} else {
+		echo "
+		<script>
+			alert('data gagal diubah!');
+			document.location.href = 'halaman_admin.php';
+		</script> 
+		";
+	}
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -17,26 +52,26 @@
 		</div>
 		<div class="card-body"> 
 <form action="" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="id" >
+	<input type="hidden" name="id" value="<?= $mhs["id"]; ?>">
 	<div class="form-group ">
 	    <label for="soal">Soal</label>
-	    <textarea class="form-control" name="soal" id="soal" rows="5" ></textarea>
+	    <textarea class="form-control" name="soal" id="soal" rows="5" value="<?= $mhs["soal"]; ?>"></textarea>
   	</div>
   <div class="form-group">
     <label for="a">Masukan Jawaban</label>
-    <input type="text" class="form-control" name="a" id="a" placeholder="Toko kue, dan toko sayur letaknya bersebelahan." >
+    <input type="text" class="form-control" name="a" id="a" placeholder="jawaban A" value="<?= $mhs["a"]; ?>">
   </div>
   <div class="form-group">
     <label for="b">Masukan Jawaban</label>
-    <input type="text" class="form-control" name="b" id="b" placeholder="Aisyah, Fatimah, dan Khadijah belajar bersama" >
+    <input type="text" class="form-control" name="b" id="b" placeholder="jawaban B" value="<?= $mhs["b"]; ?>">
   </div>
   <div class="form-group">
     <label for="c">Masukan Jawaban</label>
-    <input type="text" class="form-control" name="c" id="c" placeholder="Ibu pergi ke pasar untuk berbelanja buah duku, salak dan manggis." >
+    <input type="text" class="form-control" name="c" id="c" placeholder="jawaban C" value="<?= $mhs["c"]; ?>">
   </div>
   <div class="form-group">
     <label for="d">Masukan Jawaban</label>
-    <input type="text" class="form-control" name="d" id="d" placeholder="Adik menabung sebesar Rp. 150,000" >
+    <input type="text" class="form-control" name="d" id="d" placeholder="jawaban D" value="<?= $mhs["d"]; ?>">
   </div>
   <div class="form-group">
     <label for="kunci">Kunci Jawaban</label>
@@ -49,8 +84,8 @@
   </div>
   </div>
   <div class="card-footer">
-	  <a href="halaman_admin.html" class="btn btn-dark ">Back</a>
-	  <a href="halaman_admin.html" class="btn btn-primary ">Confirm</a>
+	  <a href="halaman_admin.php" class="btn btn-dark ">Back</a>
+	  <button type="submit" name="submit" class="btn btn-primary">Confirm</button>
   </div>
 </form>
 
